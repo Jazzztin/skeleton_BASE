@@ -216,7 +216,7 @@ void forward_convolutional_layer_q(network net, layer l, network_state state)
             }
         }
         char file_output_femap[100];
-        snprintf(file_output_femap, sizeof(file_output_femap), "C:/skeleton/bin/log_feamap/CONV%02d_output.hex", state.index);
+        snprintf(file_output_femap, sizeof(file_output_femap), "./log_feamap/CONV%02d_output.hex", state.index);
         FILE* fp = fopen(file_output_femap, "w");    
         // Data Format: [Channel, Width, Height]
         for (int chn = 0; chn < l.n; chn++) {           // OFM: Channel/index of an feature map
@@ -414,7 +414,7 @@ void save_quantized_model(network net) {
                 //{{{
                 // Find the input quantization factor for the next CONV layer
                 int next_input_quant_multiplier = 1;
-                for (int z = l->index+ 1; z < net.n; ++z) {
+                for (int z = j + 1; z < net.n; ++z) {
                     if (net.layers[z].type == CONVOLUTIONAL) {
                         next_input_quant_multiplier = net.layers[z].input_quant_multiplier;
                         break;
